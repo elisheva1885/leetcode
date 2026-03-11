@@ -1,7 +1,7 @@
 function mostWordsFound(sentences: string[]): number {
     return sentences.reduce((max,x)=>{
-                const sentence_words  = x.split(" ").length
-                return  max = max < sentence_words ? sentence_words: max;
+                const sentenceWords  = x.split(" ").length
+                return  max = max < sentenceWords ? sentenceWords: max;
     },0)
     
 };
