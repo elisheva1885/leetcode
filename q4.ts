@@ -29,6 +29,9 @@ function countPalindromicSubsequence(s: string): number {
     if(j===map.get(c)!.first){
       set.add(c);
     }
+    if(j===map.get(c)!.last){
+      set.delete(c)
+    }
   }
 
   map.forEach(info => {
