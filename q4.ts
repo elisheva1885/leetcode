@@ -1,48 +1,41 @@
+
+type LetterInfo = {
+  first: number,
+  last: number,
+  middle: Set<string>
+}
+
 function countPalindromicSubsequence(s: string): number {
-  let letters = new Set<string>();
-  let palindroms = new Set<string>();
-  let c = '';
+  const map = new Map<string, LetterInfo>();
+  const set = new Set<string>();
   for (let index = 0; index < s.length; index++) {
-    c = s.charAt(index);
-    console.log(index, ' , ', s.lastIndexOf(s.charAt(index)), ' : ', s.charAt(index));
-
-    if (s.lastIndexOf(c) > index && !letters.has(c)) {
-      letters.add(c);
-      for (let j = index + 1; j < s.lastIndexOf(c); j++) {
-        if (!palindroms.has(`${c}${s.charAt(j)}${c}`)) {
-          palindroms.add(`${c}${s.charAt(j)}${c}`)
-        }
-      }
-      console.log('leeters : ', letters);
-
-      console.log("after loop: ", palindroms);
+    const c = s.charAt(index);
+    if (!map.get(c)) {
+      map.set(c, { first: index, last: index, middle: new Set() })
+    }
+    else {
+      map.get(c)!.last = index;
     }
   }
-  return palindroms.size;
-  // const map = new Map<string, number[]>();
-  // const set = new Set<string>();
-  //     for (let index = 0; index < s.length; index++) {
-  //           c = s.charAt(index);
-  //       if(!map.has(c)){
-  //         map.set(c,[index])
-  //         set.add(c);
-  //       }
-  //       else{
-  //         map.get(c)?.push(index)
-  //       }
-  //     }
-  //     console.log("the set : ", set);
+  let sum = 0;
+  for (let j = 0; j < s.length; j++) {
+    const c = s.charAt(j);
+    set.forEach(letter=> {
+      const letterInfo = map.get(letter)
+      if(j> letterInfo!.first && j< letterInfo!.last){
+        letterInfo?.middle.add(c)
+      }
+    });
+    if(j===map.get(c)!.first){
+      set.add(c);
+    }
+  }
 
-  //     console.log("the map: ", map);
-  //     map.forEach((indexes, key)=> {
-  //       console.log(key);
-  //       if (indexes.length> 2) {
-  //         palindroms.push(`${key}${key}${key}`)
-  //       }
-  //     })
-  //     console.log(palindroms);
+  map.forEach(info => {
+    sum += info.middle.size;
+  });
 
-  //     return 1;
+  return sum;
 
 };
 
