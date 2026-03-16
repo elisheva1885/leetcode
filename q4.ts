@@ -26,11 +26,9 @@ function countPalindromicSubsequence(s: string): number {
         letterInfo?.middle.add(c)
       }
     });
-    if(j===map.get(c)!.first){
-      set.add(c);
-    }
-    if(j===map.get(c)!.last){
-      set.delete(c)
+    let info = map.get(c)!
+    if(j===info.first || j===info.last){
+      j===info.first?set.add(c): set.delete(c);
     }
   }
 
