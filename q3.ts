@@ -1,9 +1,17 @@
 function maximumWealth(accounts: number[][]): number {
-    return accounts.reduce((max, account)=> {
-     return Math.max(account.reduce((rowSum, num)=> {
-            return rowSum + num;
-        },0), max)
-    },0)
+    let rowSum = 0;
+    let max = 0;
+
+    accounts.forEach((account) => {
+            account.forEach((acconutVal) => {
+                 rowSum += acconutVal
+            })
+            max = Math.max(rowSum, max)
+            rowSum=0;
+    })
+    return max;
 };
+
+
 console.log(maximumWealth([[1, 5], [7, 3], [3, 5]]));
 
